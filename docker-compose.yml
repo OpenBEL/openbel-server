@@ -28,7 +28,6 @@ services:
       - "9292:9292"
     volumes:
       - .:/app
-      - ./data/rdf-resources:/data/rdf_resources
-      - ./data/rdf-store:/data/rdf_store
       - ./config:/config
+      - ./data:/data
     restart: always

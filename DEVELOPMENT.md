@@ -62,12 +62,23 @@ Then follow a few steps:
 3. Clone submodules for local development to the *subprojects/* directory.
   - `git submodule update`
 
-Then you will need to obtain RDF resources and full-text search database containing
+Then you will need to obtain the RDF store and full-text search database containing
 biological concepts (e.g. annotation, namespaces). Download data from
 [OpenBEL Build Server](https://build.openbel.org/browse/OR).
 
-- Copy RDF resources to `containers/data/data` and name it `rdf_store`.
-- Copy full-text search SQLite database to `containers/data/data` and name it `biological-concepts-rdf.db`.
+- Create the `data/` directory at the root of the `openbel-api`.
+- Copy the RDF store to `data/rdf_store`.
+- Copy full-text search SQLite database to `data/rdf_resources.db`.
+
+The `data/` directory is used as a mounted volume to a docker container so it can be
+accessed within the `openbel-api`.
+
+Now create the `openbel-api` configuration file you will use in development. This will need
+to point to the RDF store and full-text search database you create previously.
+
+- Copy the `config/config.yml.example` to `config/config.yml`.
+- Change the *resource_rdf.jena.tdb_directory* property to `/data/rdf_store`.
+- Change the *resource_search.sqlite.database_file* to `/data/rdf_resources.db`.
 
 Now you will need a local developer build using docker. This is accomplished by using
 the *docker-compose.yml* layout.
